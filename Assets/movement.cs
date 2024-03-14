@@ -42,7 +42,7 @@ public class movement : MonoBehaviour
             LeftLeg.sprite = SpritesLegs[ActionState];
 
         }
-        vitesseDeplacement = InitvitesseDeplacement + Streak;
+        vitesseDeplacement = InitvitesseDeplacement + (Streak/2);
         if (Is_Player1Playing || Is_Player2Playing)
         {
             LetterAction.text = LetterActionList[ActionState].ToString();
@@ -99,10 +99,10 @@ public class movement : MonoBehaviour
                 ActionState = 0;
             }
             
-            
+            SlideBehavior.baseFrequency = 5 + Streak;
+
             if (Streak > 0)
             {
-                SlideBehavior.baseFrequency = 5 + Streak;
                 float t = Mathf.InverseLerp(minValue, maxValue, Streak);
                 Color lerpedColor = Color.Lerp(minColor, maxColor, t);
                 StreakAction.color = lerpedColor;
