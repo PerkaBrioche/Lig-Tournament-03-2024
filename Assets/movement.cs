@@ -55,13 +55,13 @@ public class movement : MonoBehaviour
         }
         if (Is_Player1Playing || Is_Player2Playing && ActionState < LetterActionList.Count)
         {
-            Debug.Log("Wait For Action");
+            //Debug.Log("Wait For Action");
             
             KeyCode touche = LetterActionList[ActionState];
             
             if (Input.GetKeyDown(touche))
             {
-                Debug.Log("Bonne lettre : " + touche);
+                //Debug.Log("Bonne lettre : " + touche);
                 ActionState++;
                 if (ActionState == 3)
                 {
