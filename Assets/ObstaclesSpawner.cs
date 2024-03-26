@@ -45,7 +45,7 @@ public class ObstaclesSpawner : MonoBehaviour
             var type_obs = Random.Range(0, 2);
             if (type_obs == 0)
             {
-                y_obs = transform.position.y + 3.5f;
+                y_obs = transform.position.y;
                 obs_spawn = obstHaut;
             }
             else
