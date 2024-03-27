@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 public class movement : MonoBehaviour
 {
+    public bool ObstacleAvoiding;
 
+    
     public List<Sprite> SpritesLegs;
     public List<Sprite> SpritesTop;
     public SpriteRenderer RightLeg;
@@ -33,6 +35,7 @@ public class movement : MonoBehaviour
     public int ActionState;
     void Update()
     {
+        
         Top.sprite = SpritesTop[ActionState];
         if (Is_Player1Playing)
         {
@@ -43,7 +46,6 @@ public class movement : MonoBehaviour
         {
             RightLeg.sprite = SpritesLegs[0];
             LeftLeg.sprite = SpritesLegs[ActionState];
-
         }
         vitesseDeplacement = InitvitesseDeplacement + (Streak/2);
         if (Is_Player1Playing || Is_Player2Playing)
@@ -58,10 +60,7 @@ public class movement : MonoBehaviour
         }
         if (Is_Player1Playing || Is_Player2Playing && ActionState < LetterActionList.Count)
         {
-            //Debug.Log("Wait For Action");
-            
             KeyCode touche = LetterActionList[ActionState];
-            
             if (Input.GetKeyDown(touche))
             {
                 //Debug.Log("Bonne lettre : " + touche);
