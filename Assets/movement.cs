@@ -9,8 +9,10 @@ public class movement : MonoBehaviour
 {
 
     public List<Sprite> SpritesLegs;
+    public List<Sprite> SpritesTop;
     public SpriteRenderer RightLeg;
     public SpriteRenderer LeftLeg;
+    public SpriteRenderer Top;
     
     public SlideBehavior SlideBehavior;
 
@@ -31,6 +33,7 @@ public class movement : MonoBehaviour
     public int ActionState;
     void Update()
     {
+        Top.sprite = SpritesTop[ActionState];
         if (Is_Player1Playing)
         {
             RightLeg.sprite = SpritesLegs[ActionState];

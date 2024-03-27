@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7374401553076771463}
   - component: {fileID: 3386680010699822926}
   - component: {fileID: 910722807688334420}
+  - component: {fileID: -8884925720177614349}
+  - component: {fileID: 1551324719910675706}
   m_Layer: 0
   m_Name: oiseau
   m_TagString: Untagged
@@ -124,3 +126,51 @@ ConstantForce2D:
   m_Force: {x: -2, y: 0}
   m_RelativeForce: {x: 0, y: 0}
   m_Torque: 0
+--- !u!58 &-8884925720177614349
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337905341681646781}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.1, y: -0.1}
+  serializedVersion: 2
+  m_Radius: 0.25
+--- !u!114 &1551324719910675706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337905341681646781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a057c41cb734bd744add606028b6387e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 3386680010699822926}

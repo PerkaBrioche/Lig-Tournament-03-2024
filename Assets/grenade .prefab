@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 901451546814424634}
   - component: {fileID: 7204677333936807454}
   - component: {fileID: -7372260535103223674}
+  - component: {fileID: 3386263403961598832}
+  - component: {fileID: -7320032512641701543}
   m_Layer: 0
   m_Name: 'grenade '
   m_TagString: Untagged
@@ -124,3 +126,52 @@ ConstantForce2D:
   m_Force: {x: -2, y: 0}
   m_RelativeForce: {x: 0, y: 0}
   m_Torque: 0
+--- !u!58 &3386263403961598832
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8495723706292680490}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.02, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.25
+--- !u!114 &-7320032512641701543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8495723706292680490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a057c41cb734bd744add606028b6387e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zone_slow: {fileID: 3309320717067274438, guid: 51d57b7d7ed4d1e419ac45612340269e, type: 3}
+  body: {fileID: 7204677333936807454}
