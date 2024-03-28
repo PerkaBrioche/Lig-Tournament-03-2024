@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 910722807688334420}
   - component: {fileID: -8884925720177614349}
   - component: {fileID: 1551324719910675706}
+  - component: {fileID: 4840933484155365738}
   m_Layer: 0
   m_Name: oiseau
   m_TagString: Untagged
@@ -174,3 +175,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 3386680010699822926}
+--- !u!114 &4840933484155365738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337905341681646781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22b3c96407c2fc4199987ed94bf47d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpritesObst:
+  - {fileID: 2062634660, guid: 4f83605d436b0bb4b819f694a7c0adec, type: 3}
+  - {fileID: 2062818584, guid: 4f83605d436b0bb4b819f694a7c0adec, type: 3}
+  - {fileID: -8006499, guid: 4f83605d436b0bb4b819f694a7c0adec, type: 3}
+  Obst: {fileID: 7374401553076771463}

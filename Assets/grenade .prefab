@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -7372260535103223674}
   - component: {fileID: 3386263403961598832}
   - component: {fileID: -7320032512641701543}
+  - component: {fileID: -2579357662272626291}
   m_Layer: 0
   m_Name: 'grenade '
   m_TagString: Untagged
@@ -173,5 +174,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a057c41cb734bd744add606028b6387e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zone_slow: {fileID: 3309320717067274438, guid: 51d57b7d7ed4d1e419ac45612340269e, type: 3}
   body: {fileID: 7204677333936807454}
+--- !u!114 &-2579357662272626291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8495723706292680490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22b3c96407c2fc4199987ed94bf47d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpritesObst:
+  - {fileID: -1714873593, guid: 7bacc6160d0b596479a928c7a1928659, type: 3}
+  - {fileID: 221260954, guid: 7bacc6160d0b596479a928c7a1928659, type: 3}
+  - {fileID: -1039876707, guid: 7bacc6160d0b596479a928c7a1928659, type: 3}
+  - {fileID: 208394260, guid: 7bacc6160d0b596479a928c7a1928659, type: 3}
+  Obst: {fileID: 901451546814424634}

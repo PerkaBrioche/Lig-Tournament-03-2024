@@ -31,18 +31,25 @@ public class movement : MonoBehaviour
     public bool Is_Player1Playing;
     public bool Is_Player2Playing;
     public int ActionState;
+
+    private void Start()
+    {
+        RightLeg.sprite = SpritesLegs[4];
+        LeftLeg.sprite = SpritesLegs[4];
+    }
+
     void Update()
     {
         Top.sprite = SpritesTop[ActionState];
         if (Is_Player1Playing)
         {
             RightLeg.sprite = SpritesLegs[ActionState];
-            LeftLeg.sprite = SpritesLegs[0];
+            LeftLeg.sprite = SpritesLegs[(ActionState+3)%6];
         }
         else if(Is_Player2Playing)
         {
-            RightLeg.sprite = SpritesLegs[0];
-            LeftLeg.sprite = SpritesLegs[ActionState];
+            RightLeg.sprite = SpritesLegs[ActionState];
+            LeftLeg.sprite = SpritesLegs[(ActionState + 3) % 6];
 
         }
         vitesseDeplacement = InitvitesseDeplacement + (Streak/2);
