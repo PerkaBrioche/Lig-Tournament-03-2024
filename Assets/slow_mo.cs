@@ -8,18 +8,23 @@ public class slow_mo : MonoBehaviour
     //public GameObject zone_slow;
     public Rigidbody2D body;
     public movement movement;
+    public static float slow;
+    private Vector3 v;
+
     
     void Start()
     {
+        slow = 1;
         movement = GameObject.Find("Player").GetComponent<movement>();
-        body.velocity = new Vector3(-2, 0, 0);
+        v = new Vector3(- 6, 0, 0);
+        body.velocity = v;
     }
     void OnTriggerEnter2D(Collider2D infoCollision) // le type de la variable est Collision
     {
         if (infoCollision.CompareTag("SlowMotion"))
         {
             movement.ObstacleAvoiding = true;
-            body.velocity = new Vector2(-0.5f,0) ;
+            slow = 0.1f;
         }
     }
 
@@ -28,7 +33,7 @@ public class slow_mo : MonoBehaviour
         if (infoCollision.CompareTag("SlowMotion"))
         {
             movement.ObstacleAvoiding = false;
-            body.velocity = new Vector2(-2f, 0);
+            slow = 1;
         }
     }
 
@@ -36,6 +41,6 @@ public class slow_mo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        body.velocity = v * slow;
     }
 }

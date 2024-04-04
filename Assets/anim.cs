@@ -18,7 +18,8 @@ public class anim : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 0.1f)
+        float limit = 0.1f / slow_mo.slow;
+        if (timer > limit )
         {
             compteur++;
             Obst.sprite = SpritesObst[compteur % SpritesObst.Count];
