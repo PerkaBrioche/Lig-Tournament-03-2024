@@ -13,6 +13,8 @@ public class slow_mo : MonoBehaviour
 
     public TextMeshPro inputText;
     public List<KeyCode> possibleInputs;
+    public static float slow;
+    private Vector3 v;
 
     private bool displayInput = false;
     public KeyCode curInput;
@@ -23,15 +25,19 @@ public class slow_mo : MonoBehaviour
         movement = GameObject.Find("Player").GetComponent<movement>();
         body.velocity = new Vector3(-2, 0, 0);
 
-        inputText = GetComponentInChildren<TextMeshPro>();
-        if (inputText != null)
-        {
-            inputText.text = "";
-        }
-        else
-        {
-            Debug.LogWarning("TextMeshPro component not found in the child objects of " + gameObject.name);
-        }
+       // inputText = GetComponentInChildren<TextMeshPro>();
+      //  if (inputText != null)
+       // {
+       //     inputText.text = "";
+      //  }
+      //  else
+       // {
+      //      Debug.LogWarning("TextMeshPro component not found in the child objects of " + gameObject.name);
+       // }
+      
+        v = new Vector3(-6, 0, 0);
+        body.velocity = v;
+
     }
 
     void OnTriggerEnter2D(Collider2D infoCollision) // le type de la variable est Collision
@@ -56,7 +62,8 @@ public class slow_mo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(movement.ObstacleAvoiding && !displayInput)
+        body.velocity = v * slow;
+        if (movement.ObstacleAvoiding && !displayInput)
         {
             Debug.Log("displaying input");
             var i = Random.Range(0, possibleInputs.Count);

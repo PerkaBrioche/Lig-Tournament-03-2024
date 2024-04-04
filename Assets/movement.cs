@@ -8,6 +8,8 @@ using Unity.VisualScripting;
 
 public class movement : MonoBehaviour
 {
+    public int INT_AvoidR;
+    public int INT_AvoidL;
     public bool ObstacleAvoiding;
     BoxCollider2D zone_slow;
 
@@ -29,6 +31,8 @@ public class movement : MonoBehaviour
     public float vitesseDeplacement;
     public float InitvitesseDeplacement;
     public TextMeshPro LetterAction;
+    public TextMeshPro LetterAvoidR;
+    public TextMeshPro LetterAvoidL;
     public TextMeshProUGUI StreakAction;
     public int Streak;
     public List<KeyCode> LetterActionList;
@@ -47,8 +51,10 @@ public class movement : MonoBehaviour
 
     void Update()
     {
-        if (ObstacleAvoiding == false)
+        if (!ObstacleAvoiding)
         {
+            LetterAvoidL.text = "";
+            LetterAvoidR.text = "";
             Top.sprite = SpritesTop[ActionState];
             if (Is_Player1Playing)
             {
@@ -128,74 +134,49 @@ public class movement : MonoBehaviour
 
             }
         }
-
         else
         {
+            LetterAvoidL.text = esquiv_haut[0].ToString();
+            LetterAvoidR.text = esquiv_haut[1].ToString();
+            LetterAction.text = "";
+            print("Yipi");
             float timer = 0;
             if (obst.tag_o == "high")
             {
-                if (Input.GetKeyDown(esquiv_haut[0]))
+                timer += Time.deltaTime;
+                while (timer < 0.5f)
                 {
-                    timer += Time.deltaTime;
-                    while (timer < 0.5f)
+                    print("YIPIXX");
+                    if (Input.GetKeyDown(esquiv_haut[0]))
                     {
-                        if (Input.GetKeyDown(esquiv_haut[1]))
-                        {
-                            ObstacleAvoiding = false;
-                        }
-                        if (Input.anyKeyDown && !Input.GetKeyDown(esquiv_haut[1]))
-                        {
-                            Debug.Log("perdu !");
-                            ObstacleAvoiding = false;
-                            timer = 1;
-                        }
+                        INT_AvoidR++;
                     }
-                    timer = 0;
-                }
-
-
-                if (Input.GetKeyDown(esquiv_haut[1]))
-                {
-                    timer += Time.deltaTime;
-                    while (timer < 0.5f)
+                    if (Input.GetKeyDown(esquiv_haut[1]))
                     {
-                        if (Input.GetKeyDown(esquiv_haut[0]))
-                        {
-                            ObstacleAvoiding = false;
-                            timer = 1;
-                        }
-                        if (Input.anyKeyDown && !Input.GetKeyDown(esquiv_haut[0]))
-                        {
-                            Debug.Log("perdu !");
-                            ObstacleAvoiding = false;
-                            timer = 1; 
-                        }
+                        INT_AvoidL++;
                     }
-                    timer = 0;
                 }
+                Debug.Log("perdu !");
+                ObstacleAvoiding = false;
+                timer = 1;
             }
 
             if (obst.tag_o == "low")
             {
-                if (Input.GetKeyDown(esquiv_bas[0]))
-                {
-                    timer += Time.deltaTime;
+                Debug.Log("Mais frr !");
+
+                timer += Time.deltaTime;
                     while (timer < 0.5f)
                     {
-                        if (Input.GetKeyDown(esquiv_bas[1]))
-                        {
-                            ObstacleAvoiding = false;
-                        }
                         if (Input.anyKeyDown && !Input.GetKeyDown(esquiv_bas[1]))
                         {
-                            Debug.Log("perdu !");
-                            ObstacleAvoiding = false;
-                            timer = 1;
+
                         }
                     }
-
-                    timer = 0;
-                }
+                    Debug.Log("perdu !");
+                    ObstacleAvoiding = false;
+                    timer = 1;
+                
 
 
                 if (Input.GetKeyDown(esquiv_bas[1]))
