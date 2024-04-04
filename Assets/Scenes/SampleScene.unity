@@ -1152,7 +1152,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000d1875bb97100af4ed946a170ffd2bb9cdf066cdfab70560e
+  m_ApplyToSortingLayers: 00000000d1875bb97100af4ed946a170ffd2bb9cdf066cdfab70560e9bb669fb
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1733,7 +1733,7 @@ GameObject:
   - component: {fileID: 1384468691}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
