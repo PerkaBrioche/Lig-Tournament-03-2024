@@ -23,7 +23,6 @@ public class slow_mo : MonoBehaviour
     {
         slow = 1;
         movement = GameObject.Find("Player").GetComponent<movement>();
-        body.velocity = new Vector3(-2, 0, 0);
 
        // inputText = GetComponentInChildren<TextMeshPro>();
       //  if (inputText != null)
