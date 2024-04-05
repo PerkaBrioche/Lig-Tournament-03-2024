@@ -44,6 +44,11 @@ public class movement : MonoBehaviour
     public bool Is_Player2Playing;
     public int ActionState;
     private float timer = 0;
+    public static bool stun = false;
+    public float timer_stun = 0;
+    
+    
+    
     private void Start()
     {
         Top.sprite = SpritesTop[4];
@@ -54,111 +59,127 @@ public class movement : MonoBehaviour
 
     void Update()
     {
-        if (!ObstacleAvoiding && player.transform.position.y < -1)
+        if (stun)
         {
-            INT_AvoidL = 0;
-            INT_AvoidR = 0;
-            LetterAvoidL.text = "";
-            LetterAvoidR.text = "";
-            Top.sprite = SpritesTop[ActionState];
-            if (Is_Player1Playing)
-            {
-                RightLeg.sprite = SpritesLegs[ActionState];
-                LeftLeg.sprite = SpritesLegs[(ActionState + 3) % 6];
-            }
-            else if (Is_Player2Playing)
-            {
-                RightLeg.sprite = SpritesLegs[ActionState];
-                LeftLeg.sprite = SpritesLegs[(ActionState + 3) % 6];
+            Debug.Log("stun !");
+            player_body.constraints = RigidbodyConstraints2D.FreezePositionX;
+            timer_stun += Time.deltaTime;
+            if (timer_stun > 1)
+            { stun = false; timer_stun = 0; }
 
-            }
-            vitesseDeplacement = InitvitesseDeplacement + (Streak / 2);
-            if (Is_Player1Playing || Is_Player2Playing)
+        }
+
+        else
+        {
+
+            if (!ObstacleAvoiding && player.transform.position.y < -1)
             {
-                LetterAction.text = LetterActionList[ActionState].ToString();
-                StreakAction.text = "x" + Streak;
-            }
-            else
-            {
-                LetterAction.text = "";
-                StreakAction.text = "...";
-            }
-            if (Is_Player1Playing || Is_Player2Playing && ActionState < LetterActionList.Count)
-            {
-                KeyCode touche = LetterActionList[ActionState];
-                if (Input.GetKeyDown(touche))
+                INT_AvoidL = 0;
+                INT_AvoidR = 0;
+                LetterAvoidL.text = "";
+                LetterAvoidR.text = "";
+                Top.sprite = SpritesTop[ActionState];
+                if (Is_Player1Playing)
                 {
-                    //Debug.Log("Bonne lettre : " + touche);
-                    ActionState++;
-                    if (ActionState == 3)
-                    {
-                        Is_Player1Playing = false;
-                        Is_Player2Playing = true;
-                        Vector3 newPosition = transform.position + new Vector3(vitesseDeplacement, 0f, 0f);
-                        transform.position = newPosition;
-
-                        Streak++;
-                    }
-                    else if (ActionState == 6)
-                    {
-                        Is_Player2Playing = false;
-                        Is_Player1Playing = true;
-                        Vector3 newPosition = transform.position + new Vector3(vitesseDeplacement, 0f, 0f);
-                        transform.position = newPosition;
-                        Streak++;
-                    }
+                    RightLeg.sprite = SpritesLegs[ActionState];
+                    LeftLeg.sprite = SpritesLegs[(ActionState + 3) % 6];
                 }
-                else if (Input.anyKeyDown && !Input.GetKeyDown(touche))
+                else if (Is_Player2Playing)
                 {
-                    Streak = 0;
-                    if (Is_Player1Playing)
+                    RightLeg.sprite = SpritesLegs[ActionState];
+                    LeftLeg.sprite = SpritesLegs[(ActionState + 3) % 6];
+
+                }
+                vitesseDeplacement = InitvitesseDeplacement + (Streak / 2);
+                if (Is_Player1Playing || Is_Player2Playing)
+                {
+                    LetterAction.text = LetterActionList[ActionState].ToString();
+                    StreakAction.text = "x" + Streak;
+                }
+                else
+                {
+                    LetterAction.text = "";
+                    StreakAction.text = "...";
+                }
+                if (Is_Player1Playing || Is_Player2Playing && ActionState < LetterActionList.Count)
+                {
+                    KeyCode touche = LetterActionList[ActionState];
+                    if (Input.GetKeyDown(touche))
+                    {
+                        //Debug.Log("Bonne lettre : " + touche);
+                        ActionState++;
+                        if (ActionState == 3)
+                        {
+                            Is_Player1Playing = false;
+                            Is_Player2Playing = true;
+                            Vector3 newPosition = transform.position + new Vector3(vitesseDeplacement, 0f, 0f);
+                            transform.position = newPosition;
+
+                            Streak++;
+                        }
+                        else if (ActionState == 6)
+                        {
+                            Is_Player2Playing = false;
+                            Is_Player1Playing = true;
+                            Vector3 newPosition = transform.position + new Vector3(vitesseDeplacement, 0f, 0f);
+                            transform.position = newPosition;
+                            Streak++;
+                        }
+                    }
+                    else if (Input.anyKeyDown && !Input.GetKeyDown(touche))
+                    {
+                        Streak = 0;
+                        if (Is_Player1Playing)
+                        {
+                            ActionState = 0;
+                        }
+                        if (Is_Player2Playing)
+                        {
+                            ActionState = 3;
+                        }
+                    }
+
+
+
+                    if (ActionState == LetterActionList.Count)
                     {
                         ActionState = 0;
                     }
-                    if (Is_Player2Playing)
+
+                    SlideBehavior.baseFrequency = 5 + Streak;
+
+                    if (Streak > 0)
                     {
-                        ActionState = 3;
+                        float t = Mathf.InverseLerp(minValue, maxValue, Streak);
+                        Color lerpedColor = Color.Lerp(minColor, maxColor, t);
+                        StreakAction.color = lerpedColor;
                     }
+
                 }
-
-
-
-                if (ActionState == LetterActionList.Count)
-                {
-                    ActionState = 0;
-                }
-
-                SlideBehavior.baseFrequency = 5 + Streak;
-
-                if (Streak > 0)
-                {
-                    float t = Mathf.InverseLerp(minValue, maxValue, Streak);
-                    Color lerpedColor = Color.Lerp(minColor, maxColor, t);
-                    StreakAction.color = lerpedColor;
-                }
-
             }
-        }
-        else
-        {
-            LetterAvoidL.text = esquiv_haut[0].ToString();
-            LetterAvoidR.text = esquiv_haut[1].ToString();
-            LetterAction.text = "";
-            print("Yipi");
-            if (obst.tag_o == "high")
+            else
             {
-                while (timer < 4f)
+                
+                LetterAction.text = "";
+                print("Yipi");
+                if (obst.tag_o == "high")
                 {
-                    print("YIPIXX");
-                    timer += Time.deltaTime;
+                    LetterAvoidL.text = esquiv_haut[0].ToString();
+                    LetterAvoidR.text = esquiv_haut[1].ToString();
+                    while (timer < 4f)
+                    {
+                        print("YIPIXX");
+                        timer += Time.deltaTime;
+                    }
+                    Debug.Log("perdu !");
+
                 }
-                Debug.Log("perdu !");
 
-            }
-
-            if (obst.tag_o == "low")
-            {
-                Debug.Log("Mais frr !");
+                if (obst.tag_o == "low")
+                {
+                    LetterAvoidL.text = esquiv_bas[0].ToString();
+                    LetterAvoidR.text = esquiv_bas[1].ToString();
+                    Debug.Log("Mais frr !");
                     while (timer < 4f)
                     {
 
@@ -171,28 +192,29 @@ public class movement : MonoBehaviour
                         {
                             INT_AvoidL++;
                             Debug.Log("GAUCHE");
-                        }       
-                        if (INT_AvoidL/150 > 3 && INT_AvoidR/150 > 3)
+                        }
+                        if (INT_AvoidL / 150 > 3 && INT_AvoidR / 150 > 3)
                         {
-                        Debug.Log("YOOO");
-                        timer = 1;
-                        while (timer < 3)
-                        { player_body.velocity = new Vector2(0, 7); timer += Time.deltaTime; }
-                            
+                            Debug.Log("YOOO");
+                            timer = 1;
+                            while (timer < 3)
+                            { player_body.velocity = new Vector2(0, 7); timer += Time.deltaTime; }
+
                             INT_AvoidL = 0;
                             INT_AvoidR = 0;
-                        ObstacleAvoiding = false;
-                         }
+                            ObstacleAvoiding = false;
+                        }
                         timer += Time.deltaTime;
                     }
-                
-                Debug.Log("perdu !");
-                
-                timer = 0;
-             
+
+                    Debug.Log("perdu !");
+
+                    timer = 0;
+
+                }
             }
+
         }
-        
     }
 }
 

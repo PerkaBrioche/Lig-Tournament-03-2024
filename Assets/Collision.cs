@@ -26,10 +26,13 @@ public class Collision : MonoBehaviour
         {
             Debug.Log("Hit");
             Vector3 push = new Vector3(-2f, 0f, 0f);
+            movement.stun = true;
+            Destroy(obstacle);
             infoCollision.gameObject.transform.position = infoCollision.gameObject.transform.position + push;
+            
             //infoCollision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-5, 5), ForceMode2D.Impulse);
             // ou bien appeler fonction du player
-            Destroy(obstacle);
+            
         }
     }
 }
