@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using TMPro;
 
@@ -36,6 +37,15 @@ public class slow_mo : MonoBehaviour
       
         v = new Vector3(-6, 0, 0);
         body.velocity = v;
+        inputText = GetComponentInChildren<TextMeshPro>();
+        if (inputText != null)
+        {
+            inputText.text = "";
+        }
+        else
+        {
+            Debug.LogWarning("TextMeshPro component not found in the child objects of " + gameObject.name);
+        }
 
     }
 
@@ -61,6 +71,20 @@ public class slow_mo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (movement.ObstacleAvoiding && !displayInput)
+        {
+            Debug.Log("displaying input");
+            var i = Random.Range(0, possibleInputs.Count);
+            curInput = possibleInputs[i];
+            inputText.text = curInput.ToString();
+            displayInput = true;
+        }
+        else if (displayInput && !(movement.ObstacleAvoiding))
+        {
+            Debug.Log("no longer displaying input");
+            inputText.text = "";
+            displayInput = false;
+        }
         body.velocity = v * slow;
         if (movement.ObstacleAvoiding && !displayInput)
         {
