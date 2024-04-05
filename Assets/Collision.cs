@@ -15,7 +15,7 @@ public class Collision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (obstacle.transform.position.x < -15) Destroy(obstacle);
+        if (obstacle.transform.position.x < -15) Destroy(obstacle);// je détruis l'obstacle si jamais il va trop a gauche
     }
 
 
@@ -27,7 +27,7 @@ public class Collision : MonoBehaviour
             Debug.Log("Hit");
             Vector3 push = new Vector3(-2f, 0f, 0f);
             movement.stun = true;
-            Destroy(obstacle);
+            Destroy(obstacle); // je détruis l'objet si jamais il entre en collision avec le joueur
             infoCollision.gameObject.transform.position = infoCollision.gameObject.transform.position + push;
             
             //infoCollision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-5, 5), ForceMode2D.Impulse);

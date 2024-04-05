@@ -8,32 +8,20 @@ using TMPro;
 
 public class slow_mo : MonoBehaviour
 {
-    //public GameObject zone_slow;
     public Rigidbody2D body;
     private movement movement;
 
     public TextMeshPro inputText;
-   // public List<KeyCode> possibleInputs;
     public static float slow;
     private Vector3 v;
 
-    //private bool displayInput = false;
-    //public KeyCode curInput;
 
     void Start()
     {
         slow = 1;
         movement = GameObject.Find("Player").GetComponent<movement>();
 
-       // inputText = GetComponentInChildren<TextMeshPro>();
-      //  if (inputText != null)
-       // {
-       //     inputText.text = "";
-      //  }
-      //  else
-       // {
-      //      Debug.LogWarning("TextMeshPro component not found in the child objects of " + gameObject.name);
-       // }
+      
       
         v = new Vector3(-6, 0, 0);
         body.velocity = v;
@@ -68,38 +56,9 @@ public class slow_mo : MonoBehaviour
     }
 
     
-    // Update is called once per frame
     void Update()
     {
         body.velocity = v * slow;
-        /* if (movement.ObstacleAvoiding && !displayInput)
-         {
-             Debug.Log("displaying input");
-             var i = Random.Range(0, possibleInputs.Count);
-             curInput = possibleInputs[i];
-             inputText.text = curInput.ToString();
-             displayInput = true;
-         }
-         else if (displayInput && !(movement.ObstacleAvoiding))
-         {
-             Debug.Log("no longer displaying input");
-             inputText.text = "";
-             displayInput = false;
-         }
-         body.velocity = v * slow;
-        && !displayInput
-        if (movement.ObstacleAvoiding )
-        {
-            Debug.Log("displaying input");
-            var i = Random.Range(0, possibleInputs.Count);
-            curInput = possibleInputs[i];
-            inputText.text = curInput.ToString();
-            displayInput = true;
-        } else if(displayInput && !(movement.ObstacleAvoiding))
-        {
-            Debug.Log("no longer displaying input");
-            inputText.text = "";
-            displayInput = false;
-        }*/
+        
     }
 }

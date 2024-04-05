@@ -12,7 +12,7 @@ public class movement : MonoBehaviour
     public int INT_AvoidL;
     public bool ObstacleAvoiding;
     public GameObject player;
-    BoxCollider2D zone_slow;
+    public GameObject zone_slow;
 
     
     public List<Sprite> SpritesLegs;
@@ -59,7 +59,7 @@ public class movement : MonoBehaviour
 
     void Update()
     {
-        if (stun)
+        if (stun) // E : en gros l'idée c'est que pendant une seconde, tu peux plus bouger si t'as été touchée (en plus de la poussée qui était la de base), plus de 1 secondes, je trouve ca fait un peu bcp en vrai
         {
             Debug.Log("stun !");
             player_body.constraints = RigidbodyConstraints2D.FreezePositionX;
@@ -78,22 +78,22 @@ public class movement : MonoBehaviour
                 INT_AvoidR = 0;
                 LetterAvoidL.text = "";
                 LetterAvoidR.text = "";
-                Top.sprite = SpritesTop[ActionState];
+                Top.sprite = SpritesTop[ActionState%6];
                 if (Is_Player1Playing)
                 {
-                    RightLeg.sprite = SpritesLegs[ActionState];
+                    RightLeg.sprite = SpritesLegs[ActionState%6];
                     LeftLeg.sprite = SpritesLegs[(ActionState + 3) % 6];
                 }
                 else if (Is_Player2Playing)
                 {
-                    RightLeg.sprite = SpritesLegs[ActionState];
+                    RightLeg.sprite = SpritesLegs[ActionState%6];
                     LeftLeg.sprite = SpritesLegs[(ActionState + 3) % 6];
 
                 }
                 vitesseDeplacement = InitvitesseDeplacement + (Streak / 2);
                 if (Is_Player1Playing || Is_Player2Playing)
                 {
-                    LetterAction.text = LetterActionList[ActionState].ToString();
+                    LetterAction.text = LetterActionList[ActionState%6].ToString();
                     StreakAction.text = "x" + Streak;
                 }
                 else
@@ -103,7 +103,7 @@ public class movement : MonoBehaviour
                 }
                 if (Is_Player1Playing || Is_Player2Playing && ActionState < LetterActionList.Count)
                 {
-                    KeyCode touche = LetterActionList[ActionState];
+                    KeyCode touche = LetterActionList[ActionState%6];
                     if (Input.GetKeyDown(touche))
                     {
                         //Debug.Log("Bonne lettre : " + touche);
@@ -113,7 +113,10 @@ public class movement : MonoBehaviour
                             Is_Player1Playing = false;
                             Is_Player2Playing = true;
                             Vector3 newPosition = transform.position + new Vector3(vitesseDeplacement, 0f, 0f);
-                            transform.position = newPosition;
+                            if (seuil_pos.pos_x - newPosition.x > 2.1f)
+                            transform.position = newPosition; // globalement, si il y a assez d'esapce, je mets la position normale mais si après le déplacement, on est trop proche de l'objet, je me limite à une certaine distance de l'objet
+                            else 
+                                transform.position = zone_slow.transform.position - new Vector3(1,0,0);
 
                             Streak++;
                         }
@@ -122,7 +125,11 @@ public class movement : MonoBehaviour
                             Is_Player2Playing = false;
                             Is_Player1Playing = true;
                             Vector3 newPosition = transform.position + new Vector3(vitesseDeplacement, 0f, 0f);
-                            transform.position = newPosition;
+                            if (seuil_pos.pos_x - newPosition.x > 2.1f)
+                                transform.position = newPosition;
+                            else
+                                Debug.Log("feur");
+                                transform.position = zone_slow.transform.position - new Vector3(1, 0, 0);
                             Streak++;
                         }
                     }
@@ -180,32 +187,25 @@ public class movement : MonoBehaviour
                     LetterAvoidL.text = esquiv_bas[0].ToString();
                     LetterAvoidR.text = esquiv_bas[1].ToString();
                     Debug.Log("Mais frr !");
-                    while (timer < 4f)
-                    {
-
                         if (Input.GetKeyDown(esquiv_bas[0]))
                         {
-                            INT_AvoidR++;
-                            Debug.Log("DROITE");
+                            INT_AvoidR++; // E: le principe c qu'il faut appuyer un nombre de fois sur flèche du haut / Z pour que le perso saute, avoidR et avoidL comptent le nombre de fois que ces touches sont appuyées
                         }
                         if (Input.GetKeyDown(esquiv_bas[1]))
                         {
                             INT_AvoidL++;
-                            Debug.Log("GAUCHE");
                         }
-                        if (INT_AvoidL / 150 > 3 && INT_AvoidR / 150 > 3)
+                        if (INT_AvoidL / 150 > 3 && INT_AvoidR / 150 > 3) // E :la division par 150 c pcq les deux int donnaient des valeurs de fou à chaque fois que j'appuyais (genre entre 100 et 200 par appui de touche)
                         {
-                            Debug.Log("YOOO");
                             timer = 1;
                             while (timer < 3)
-                            { player_body.velocity = new Vector2(0, 7); timer += Time.deltaTime; }
+                            { player_body.velocity = new Vector2(0, 7); timer += Time.deltaTime; } //E : je donne une vélocité qui va vers le haut le temps que le perso passe au dessus de la grenade
 
-                            INT_AvoidL = 0;
+                            INT_AvoidL = 0; // E : après je reset les deux nombres
                             INT_AvoidR = 0;
                             ObstacleAvoiding = false;
                         }
-                        timer += Time.deltaTime;
-                    }
+                    
 
                     Debug.Log("perdu !");
 
