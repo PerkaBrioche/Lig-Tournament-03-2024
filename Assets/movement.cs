@@ -11,6 +11,7 @@ public class movement : MonoBehaviour
     public int INT_AvoidR;
     public int INT_AvoidL;
     public bool ObstacleAvoiding;
+    public GameObject player;
     BoxCollider2D zone_slow;
 
     
@@ -26,6 +27,7 @@ public class movement : MonoBehaviour
     public int maxValue;
     public Color minColor;
     public Color maxColor;
+    public Rigidbody2D player_body;
     
     
     public float vitesseDeplacement;
@@ -41,18 +43,21 @@ public class movement : MonoBehaviour
     public bool Is_Player1Playing;
     public bool Is_Player2Playing;
     public int ActionState;
-
+    private float timer = 0;
     private void Start()
     {
         Top.sprite = SpritesTop[4];
         RightLeg.sprite = SpritesLegs[4];
         LeftLeg.sprite = SpritesLegs[4];
+        
     }
 
     void Update()
     {
-        if (!ObstacleAvoiding)
+        if (!ObstacleAvoiding && player.transform.position.y < -1)
         {
+            INT_AvoidL = 0;
+            INT_AvoidR = 0;
             LetterAvoidL.text = "";
             LetterAvoidR.text = "";
             Top.sprite = SpritesTop[ActionState];
@@ -140,63 +145,51 @@ public class movement : MonoBehaviour
             LetterAvoidR.text = esquiv_haut[1].ToString();
             LetterAction.text = "";
             print("Yipi");
-            float timer = 0;
             if (obst.tag_o == "high")
             {
-                timer += Time.deltaTime;
-                while (timer < 0.5f)
+                while (timer < 4f)
                 {
                     print("YIPIXX");
-                    if (Input.GetKeyDown(esquiv_haut[0]))
-                    {
-                        INT_AvoidR++;
-                    }
-                    if (Input.GetKeyDown(esquiv_haut[1]))
-                    {
-                        INT_AvoidL++;
-                    }
+                    timer += Time.deltaTime;
                 }
                 Debug.Log("perdu !");
-                ObstacleAvoiding = false;
-                timer = 1;
+
             }
 
             if (obst.tag_o == "low")
             {
                 Debug.Log("Mais frr !");
-
-                timer += Time.deltaTime;
-                    while (timer < 0.5f)
+                    while (timer < 4f)
                     {
-                        if (Input.anyKeyDown && !Input.GetKeyDown(esquiv_bas[1]))
-                        {
 
-                        }
-                    }
-                    Debug.Log("perdu !");
-                    ObstacleAvoiding = false;
-                    timer = 1;
-                
-
-
-                if (Input.GetKeyDown(esquiv_bas[1]))
-                {
-                    timer += Time.deltaTime;
-                    while (timer < 0.5f)
-                    {
                         if (Input.GetKeyDown(esquiv_bas[0]))
                         {
-                            ObstacleAvoiding = false;
+                            INT_AvoidR++;
+                            Debug.Log("DROITE");
                         }
-                        if (Input.anyKeyDown && !Input.GetKeyDown(esquiv_bas[0]))
+                        if (Input.GetKeyDown(esquiv_bas[1]))
                         {
-                            Debug.Log("perdu !");
-                            ObstacleAvoiding = false;
-                            timer = 1;
-                        }
+                            INT_AvoidL++;
+                            Debug.Log("GAUCHE");
+                        }       
+                        if (INT_AvoidL/150 > 3 && INT_AvoidR/150 > 3)
+                        {
+                        Debug.Log("YOOO");
+                        timer = 1;
+                        while (timer < 3)
+                        { player_body.velocity = new Vector2(0, 7); timer += Time.deltaTime; }
+                            
+                            INT_AvoidL = 0;
+                            INT_AvoidR = 0;
+                        ObstacleAvoiding = false;
+                         }
+                        timer += Time.deltaTime;
                     }
-                    timer = 0;
-                }
+                
+                Debug.Log("perdu !");
+                
+                timer = 0;
+             
             }
         }
         

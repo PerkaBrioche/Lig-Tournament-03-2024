@@ -10,15 +10,15 @@ public class slow_mo : MonoBehaviour
 {
     //public GameObject zone_slow;
     public Rigidbody2D body;
-    public movement movement;
+    private movement movement;
 
     public TextMeshPro inputText;
-    public List<KeyCode> possibleInputs;
+   // public List<KeyCode> possibleInputs;
     public static float slow;
     private Vector3 v;
 
-    private bool displayInput = false;
-    public KeyCode curInput;
+    //private bool displayInput = false;
+    //public KeyCode curInput;
 
     void Start()
     {
@@ -71,22 +71,24 @@ public class slow_mo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (movement.ObstacleAvoiding && !displayInput)
-        {
-            Debug.Log("displaying input");
-            var i = Random.Range(0, possibleInputs.Count);
-            curInput = possibleInputs[i];
-            inputText.text = curInput.ToString();
-            displayInput = true;
-        }
-        else if (displayInput && !(movement.ObstacleAvoiding))
-        {
-            Debug.Log("no longer displaying input");
-            inputText.text = "";
-            displayInput = false;
-        }
         body.velocity = v * slow;
-        if (movement.ObstacleAvoiding && !displayInput)
+        /* if (movement.ObstacleAvoiding && !displayInput)
+         {
+             Debug.Log("displaying input");
+             var i = Random.Range(0, possibleInputs.Count);
+             curInput = possibleInputs[i];
+             inputText.text = curInput.ToString();
+             displayInput = true;
+         }
+         else if (displayInput && !(movement.ObstacleAvoiding))
+         {
+             Debug.Log("no longer displaying input");
+             inputText.text = "";
+             displayInput = false;
+         }
+         body.velocity = v * slow;
+        && !displayInput
+        if (movement.ObstacleAvoiding )
         {
             Debug.Log("displaying input");
             var i = Random.Range(0, possibleInputs.Count);
@@ -98,6 +100,6 @@ public class slow_mo : MonoBehaviour
             Debug.Log("no longer displaying input");
             inputText.text = "";
             displayInput = false;
-        }
+        }*/
     }
 }

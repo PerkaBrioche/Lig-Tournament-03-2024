@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: -2755965883710252126}
   m_Layer: 0
   m_Name: 'grenade '
-  m_TagString: Untagged
+  m_TagString: Low
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -361,10 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 7204677333936807454}
-  movement: {fileID: 0}
   inputText: {fileID: 2881135490047543697}
-  possibleInputs: 67000000680000006a0000006b000000
-  curInput: 0
 --- !u!114 &-2579357662272626291
 MonoBehaviour:
   m_ObjectHideFlags: 0

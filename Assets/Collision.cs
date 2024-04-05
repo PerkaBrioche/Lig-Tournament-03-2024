@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
+    public GameObject obstacle;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +15,7 @@ public class Collision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (obstacle.transform.position.x < -15) Destroy(obstacle);
     }
 
 
@@ -27,7 +29,7 @@ public class Collision : MonoBehaviour
             infoCollision.gameObject.transform.position = infoCollision.gameObject.transform.position + push;
             //infoCollision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-5, 5), ForceMode2D.Impulse);
             // ou bien appeler fonction du player
-            gameObject.SetActive(false);
+            Destroy(obstacle);
         }
     }
 }

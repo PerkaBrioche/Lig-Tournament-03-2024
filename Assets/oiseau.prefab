@@ -361,10 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 3386680010699822926}
-  movement: {fileID: 0}
   inputText: {fileID: 8889664675512950387}
-  possibleInputs: 67000000680000006a0000006b000000
-  curInput: 0
 --- !u!114 &4840933484155365738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,3 +391,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03534edcfa6d5c84caf03694866e6843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacle: {fileID: 8337905341681646781}

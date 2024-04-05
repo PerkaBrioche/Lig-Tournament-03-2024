@@ -2111,7 +2111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba605f9476313f45bd9bff158e18e30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  INT_AvoidR: 0
+  INT_AvoidL: 0
   ObstacleAvoiding: 0
+  player: {fileID: 1384468685}
   SpritesLegs:
   - {fileID: -2006100762, guid: 89ef4497e91a07341880f6867d72c2be, type: 3}
   - {fileID: 370433252, guid: 89ef4497e91a07341880f6867d72c2be, type: 3}
@@ -2134,6 +2137,7 @@ MonoBehaviour:
   maxValue: 15
   minColor: {r: 1, g: 1, b: 1, a: 1}
   maxColor: {r: 0.7987421, g: 0, b: 0, a: 1}
+  player_body: {fileID: 1384468687}
   vitesseDeplacement: 0.5
   InitvitesseDeplacement: 1
   LetterAction: {fileID: 1127678187}
@@ -2142,8 +2146,8 @@ MonoBehaviour:
   StreakAction: {fileID: 1941195046}
   Streak: 0
   LetterActionList: 770000006400000061000000110100001301000014010000
-  esquiv_haut: 1101000077000000
-  esquiv_bas: 1201000073000000
+  esquiv_haut: 1201000073000000
+  esquiv_bas: 1101000077000000
   Is_Player1Playing: 1
   Is_Player2Playing: 0
   ActionState: 0
