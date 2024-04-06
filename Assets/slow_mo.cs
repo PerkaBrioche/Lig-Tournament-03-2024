@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using TMPro;
 using UnityEngine;
-using TMPro;
 
 
 public class slow_mo : MonoBehaviour
@@ -25,15 +24,7 @@ public class slow_mo : MonoBehaviour
       
         v = new Vector3(-6, 0, 0);
         body.velocity = v;
-        inputText = GetComponentInChildren<TextMeshPro>();
-        if (inputText != null)
-        {
-            inputText.text = "";
-        }
-        else
-        {
-            Debug.LogWarning("TextMeshPro component not found in the child objects of " + gameObject.name);
-        }
+        
 
     }
 

@@ -43,7 +43,7 @@ public class movement : MonoBehaviour
     public bool Is_Player1Playing;
     public bool Is_Player2Playing;
     public int ActionState;
-    private float timer = 0;
+    public float timer = 0;
     public static bool stun = false;
     public float timer_stun = 0;
     
@@ -59,6 +59,8 @@ public class movement : MonoBehaviour
 
     void Update()
     {
+        GetComponent<CapsuleCollider2D>().enabled = true;
+        timer = 0;
         if (stun) // E : en gros l'idée c'est que pendant une seconde, tu peux plus bouger si t'as été touchée (en plus de la poussée qui était la de base), plus de 1 secondes, je trouve ca fait un peu bcp en vrai
         {
             Debug.Log("stun !");
@@ -171,14 +173,35 @@ public class movement : MonoBehaviour
                 print("Yipi");
                 if (obst.tag_o == "high")
                 {
+                    ObstacleAvoiding = true;
                     LetterAvoidL.text = esquiv_haut[0].ToString();
                     LetterAvoidR.text = esquiv_haut[1].ToString();
-                    while (timer < 4f)
+                    if (Input.GetKeyDown(esquiv_haut[1]))
                     {
-                        print("YIPIXX");
-                        timer += Time.deltaTime;
+                        while (timer < 4f)
+                        {
+                            timer += Time.deltaTime;
+                            if (Input.GetKeyDown(esquiv_haut[0]))
+                            {
+                                GetComponent<CircleCollider2D>().enabled = false; // bon là je sèche
+                            }
+                        }
+                        timer = 0;
                     }
-                    Debug.Log("perdu !");
+                    if (Input.GetKeyDown(esquiv_haut[0]))
+                    {
+                        while (timer < 4f)
+                        {
+                            timer += Time.deltaTime;
+                            if (Input.GetKeyDown(esquiv_haut[1]))
+                            {
+                                GetComponent<CapsuleCollider2D>().enabled = false;
+                            }
+                        }
+                        timer = 0;
+                    }
+
+                    
 
                 }
 
@@ -189,13 +212,15 @@ public class movement : MonoBehaviour
                     Debug.Log("Mais frr !");
                         if (Input.GetKeyDown(esquiv_bas[0]))
                         {
-                            INT_AvoidR++; // E: le principe c qu'il faut appuyer un nombre de fois sur flèche du haut / Z pour que le perso saute, avoidR et avoidL comptent le nombre de fois que ces touches sont appuyées
+                        Debug.Log(INT_AvoidR);  
+                        INT_AvoidR++; // E: le principe c qu'il faut appuyer un nombre de fois sur flèche du haut / Z pour que le perso saute, avoidR et avoidL comptent le nombre de fois que ces touches sont appuyées
                         }
                         if (Input.GetKeyDown(esquiv_bas[1]))
                         {
-                            INT_AvoidL++;
+                        Debug.Log(INT_AvoidL);
+                        INT_AvoidL++;
                         }
-                        if (INT_AvoidL / 150 > 3 && INT_AvoidR / 150 > 3) // E :la division par 150 c pcq les deux int donnaient des valeurs de fou à chaque fois que j'appuyais (genre entre 100 et 200 par appui de touche)
+                        if (INT_AvoidL > 3 && INT_AvoidR > 3) 
                         {
                             timer = 1;
                             while (timer < 3)
