@@ -2087,7 +2087,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.92156816}
+  m_Offset: {x: 0, y: -0.9}
   m_Size: {x: 1, y: 5.0574384}
   m_Direction: 0
 --- !u!50 &1384468687
@@ -2243,7 +2243,12 @@ MonoBehaviour:
   Is_Player1Playing: 1
   Is_Player2Playing: 0
   ActionState: 0
+  timer: 0
   timer_stun: 0
+  timer_esq_bas: 0
+  esq_basse: 0
+  arrow_first: 0
+  s_first: 0
 --- !u!95 &1384468691
 Animator:
   serializedVersion: 5

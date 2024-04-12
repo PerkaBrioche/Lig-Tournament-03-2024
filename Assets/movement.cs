@@ -46,6 +46,12 @@ public class movement : MonoBehaviour
     public float timer = 0;
     public static bool stun = false;
     public float timer_stun = 0;
+    public float timer_esq_bas = 0;
+    public bool esq_basse = false;
+    public bool arrow_first = false;
+    public bool s_first = false;
+    private Vector3 shrink = new Vector2(0, 5);
+    private Vector3 normal_height = new Vector2(0, -0.9f);
     
     
     
@@ -57,10 +63,27 @@ public class movement : MonoBehaviour
         
     }
 
+
     void Update()
     {
+
         GetComponent<CapsuleCollider2D>().enabled = true;
         timer = 0;
+
+        if (esq_basse) // en gros, l'idée est de lever la hitbox du perso et de slow_mo le temps que l'objet passe
+            {
+            player_body.constraints = RigidbodyConstraints2D.FreezePositionY;
+            Debug.Log("fonction esquive appelée");
+            stun = true;
+            GetComponent<CapsuleCollider2D>().offset = shrink;
+            zone_slow.GetComponent<BoxCollider2D>().offset = shrink;
+            timer_esq_bas += Time.deltaTime;
+                Debug.Log(timer_esq_bas);
+                Debug.Log("taille normale");
+            if (timer_esq_bas >= 1)
+                    { timer_esq_bas = 0; esq_basse = false; GetComponent<CapsuleCollider2D>().offset = normal_height; zone_slow.GetComponent<BoxCollider2D>().offset = new Vector2(0,0); }
+            }
+
         if (stun) // E : en gros l'idée c'est que pendant une seconde, tu peux plus bouger si t'as été touchée (en plus de la poussée qui était la de base), plus de 1 secondes, je trouve ca fait un peu bcp en vrai
         {
             Debug.Log("stun !");
@@ -76,6 +99,8 @@ public class movement : MonoBehaviour
 
             if (!ObstacleAvoiding && player.transform.position.y < -1)
             {
+                s_first = false;
+                arrow_first = false;
                 INT_AvoidL = 0;
                 INT_AvoidR = 0;
                 LetterAvoidL.text = "";
@@ -176,32 +201,48 @@ public class movement : MonoBehaviour
                     ObstacleAvoiding = true;
                     LetterAvoidL.text = esquiv_haut[0].ToString();
                     LetterAvoidR.text = esquiv_haut[1].ToString();
-                    if (Input.GetKeyDown(esquiv_haut[1]))
+                    if (!arrow_first && Input.GetKeyDown(esquiv_haut[1])) // en gros, je vois quelle touche a été pressée en premier, et j'attend que l'autre soit pressée
                     {
-                        while (timer < 4f)
-                        {
-                            timer += Time.deltaTime;
-                            if (Input.GetKeyDown(esquiv_haut[0]))
-                            {
-                                GetComponent<CircleCollider2D>().enabled = false; // bon là je sèche
-                            }
-                        }
-                        timer = 0;
+                        s_first = true;
+                        Debug.Log("touche pressée");
                     }
-                    if (Input.GetKeyDown(esquiv_haut[0]))
+
+                    if (!s_first && Input.GetKeyDown(esquiv_haut[0]))
+                        {
+                        arrow_first = true;
+                            Debug.Log("touche pressée");
+                        }
+                  
+                    if (arrow_first)
                     {
                         while (timer < 4f)
                         {
                             timer += Time.deltaTime;
                             if (Input.GetKeyDown(esquiv_haut[1]))
                             {
-                                GetComponent<CapsuleCollider2D>().enabled = false;
+                                Debug.Log("Autre touche pressée");
+                               
+                                esq_basse = true; // ce booléen renvoie vers le fait de lever la hitbox du perso
                             }
                         }
                         timer = 0;
                     }
 
-                    
+                    if (s_first)
+                    {
+                        while (timer < 4f)
+                        {
+                            timer += Time.deltaTime;
+                            if (Input.GetKeyDown(esquiv_haut[0]))
+                            {
+                                Debug.Log("Autre touche pressée");
+                            
+                                esq_basse = true;
+                            }
+                        }
+                        timer = 0;
+                    }
+
 
                 }
 
