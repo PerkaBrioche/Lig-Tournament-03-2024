@@ -13,7 +13,10 @@ public class movement : MonoBehaviour
     public bool ObstacleAvoiding;
     public GameObject player;
     public GameObject zone_slow;
-
+    public SpriteRenderer player_sprite;
+    public Sprite stun_sprite;
+    public Sprite low_sprite;
+    public List<Sprite> high_sprite;
     
     public List<Sprite> SpritesLegs;
     public List<Sprite> SpritesTop;
@@ -47,7 +50,9 @@ public class movement : MonoBehaviour
     public static bool stun = false;
     public float timer_stun = 0;
     public float timer_esq_bas = 0;
+    public float timer_esq_haute = 0;
     public bool esq_basse = false;
+    public bool esq_haute = false;
     public bool arrow_first = false;
     public bool s_first = false;
     private Vector3 shrink = new Vector2(0, 5);
@@ -81,16 +86,58 @@ public class movement : MonoBehaviour
                 Debug.Log(timer_esq_bas);
                 Debug.Log("taille normale");
             if (timer_esq_bas >= 1)
-                    { timer_esq_bas = 0; esq_basse = false; GetComponent<CapsuleCollider2D>().offset = normal_height; zone_slow.GetComponent<BoxCollider2D>().offset = new Vector2(0,0); }
+                    { 
+                timer_esq_bas = 0; 
+                esq_basse = false; GetComponent<CapsuleCollider2D>().offset = normal_height; 
+                zone_slow.GetComponent<BoxCollider2D>().offset = new Vector2(0,0); 
+                    }
             }
+        if (esq_haute)
+        { 
+                player_sprite.enabled = true;
+                RightLeg.enabled = false;
+                LeftLeg.enabled = false;
+                Top.enabled = false;
+                player_sprite.sprite = high_sprite[0];
+                player_body.velocity = new Vector2(0,2.5f);  //E : je donne une vélocité qui va vers le haut le temps que le perso passe au dessus de la grenade
+                timer_esq_haute += Time.deltaTime;
+                if (timer_esq_haute > 0.66f) player_sprite.sprite = high_sprite[2];
+                else if (timer_esq_haute > 0.33) player_sprite.sprite = high_sprite[1];
+
+                if (timer_esq_haute > 1)
+                {
+                    INT_AvoidL = 0; // E : après je reset les deux nombres
+                    INT_AvoidR = 0;
+                    ObstacleAvoiding = false;
+                esq_haute = false;
+                timer_esq_haute = 0;
+                }
+        }
 
         if (stun) // E : en gros l'idée c'est que pendant une seconde, tu peux plus bouger si t'as été touchée (en plus de la poussée qui était la de base), plus de 1 secondes, je trouve ca fait un peu bcp en vrai
         {
+            player_sprite.enabled = true;
+            RightLeg.enabled = false;
+            LeftLeg.enabled = false;
+            Top.enabled = false;
+            if (esq_basse)
+            { player_sprite.sprite = low_sprite; }
+            else
+            { player_sprite.sprite = stun_sprite; }
             Debug.Log("stun !");
             player_body.constraints = RigidbodyConstraints2D.FreezePositionX;
             timer_stun += Time.deltaTime;
             if (timer_stun > 1)
-            { stun = false; timer_stun = 0; }
+            { 
+                stun = false; 
+                timer_stun = 0;
+                RightLeg.enabled = true;
+                LeftLeg.enabled = true;
+                Top.enabled = true;
+                RightLeg.enabled = true;
+                LeftLeg.enabled = true;
+                player_sprite.enabled = false;
+            }
 
         }
 
@@ -99,6 +146,10 @@ public class movement : MonoBehaviour
 
             if (!ObstacleAvoiding && player.transform.position.y < -1)
             {
+                player_sprite.enabled = false;
+                RightLeg.enabled = true;
+                LeftLeg.enabled = true;
+                Top.enabled = true;
                 s_first = false;
                 arrow_first = false;
                 INT_AvoidL = 0;
@@ -250,32 +301,18 @@ public class movement : MonoBehaviour
                 {
                     LetterAvoidL.text = esquiv_bas[0].ToString();
                     LetterAvoidR.text = esquiv_bas[1].ToString();
-                    Debug.Log("Mais frr !");
                         if (Input.GetKeyDown(esquiv_bas[0]))
-                        {
-                        Debug.Log(INT_AvoidR);  
+                        {  
                         INT_AvoidR++; // E: le principe c qu'il faut appuyer un nombre de fois sur flèche du haut / Z pour que le perso saute, avoidR et avoidL comptent le nombre de fois que ces touches sont appuyées
                         }
                         if (Input.GetKeyDown(esquiv_bas[1]))
                         {
-                        Debug.Log(INT_AvoidL);
                         INT_AvoidL++;
                         }
                         if (INT_AvoidL > 3 && INT_AvoidR > 3) 
                         {
-                            timer = 1;
-                            while (timer < 3)
-                            { player_body.velocity = new Vector2(0, 7); timer += Time.deltaTime; } //E : je donne une vélocité qui va vers le haut le temps que le perso passe au dessus de la grenade
-
-                            INT_AvoidL = 0; // E : après je reset les deux nombres
-                            INT_AvoidR = 0;
-                            ObstacleAvoiding = false;
+                        esq_haute = true;
                         }
-                    
-
-                    Debug.Log("perdu !");
-
-                    timer = 0;
 
                 }
             }
