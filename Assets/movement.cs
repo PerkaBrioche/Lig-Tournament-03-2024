@@ -38,6 +38,10 @@ public class movement : MonoBehaviour
     public TextMeshPro LetterAction;
     public TextMeshPro LetterAvoidR;
     public TextMeshPro LetterAvoidL;
+    public TextMeshPro Warning;
+    public TextMeshPro Chrono;
+    public int chrono;
+    public float chrono_f;
     public TextMeshProUGUI StreakAction;
     public int Streak;
     public List<KeyCode> LetterActionList;
@@ -57,6 +61,7 @@ public class movement : MonoBehaviour
     public bool s_first = false;
     private Vector3 shrink = new Vector2(0, 5);
     private Vector3 normal_height = new Vector2(0, -0.9f);
+    private bool inversed = false;
     
     
     
@@ -65,12 +70,21 @@ public class movement : MonoBehaviour
         Top.sprite = SpritesTop[4];
         RightLeg.sprite = SpritesLegs[4];
         LeftLeg.sprite = SpritesLegs[4];
-        
+        Warning.text = "";
+        Chrono.text = "0";
     }
 
 
     void Update()
     {
+        chrono_f += Time.deltaTime;
+        chrono = (int)chrono_f;
+        Chrono.text = chrono.ToString();
+
+        if (Streak < 7 && inversed) { LetterActionList.Reverse() ; inversed = false; Warning.text = ""; }
+        if (Streak >= 7 && !inversed) { LetterActionList.Reverse() ; inversed = true; Warning.text = ""; }
+
+        if (Streak > 3 && !inversed) { Warning.text = "Warning ! " + (7 - Streak); }
 
         GetComponent<CapsuleCollider2D>().enabled = true;
         timer = 0;
