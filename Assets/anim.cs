@@ -6,10 +6,12 @@ public class anim : MonoBehaviour
 {
     public List<Sprite> SpritesObst;
     public SpriteRenderer Obst;
+    private movement movement;
     // Start is called before the first frame update
     void Start()
     {
         Obst.sprite = SpritesObst[0];
+        movement = GameObject.Find("Player").GetComponent<movement>();
     }
 
     float timer = 0f;
@@ -17,13 +19,16 @@ public class anim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        float limit = 0.1f / slow_mo.slow;
-        if (timer > limit )
+        if (!movement.termine)
         {
-            compteur++;
-            Obst.sprite = SpritesObst[compteur % SpritesObst.Count];
-            timer = 0f;
+            timer += Time.deltaTime;
+            float limit = 0.1f / slow_mo.slow;
+            if (timer > limit)
+            {
+                compteur++;
+                Obst.sprite = SpritesObst[compteur % SpritesObst.Count];
+                timer = 0f;
+            }
         }
     }
 }
