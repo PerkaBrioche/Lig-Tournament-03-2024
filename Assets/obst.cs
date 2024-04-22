@@ -9,6 +9,7 @@ public class obst : MonoBehaviour
     public static string tag_o;
     void OnTriggerEnter2D(Collider2D infoCollision) // le type de la variable est Collision
     {
+
         if (infoCollision.CompareTag("High"))
         {
             tag_o = "high";

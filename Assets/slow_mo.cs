@@ -49,7 +49,12 @@ public class slow_mo : MonoBehaviour
     
     void Update()
     {
-        body.velocity = v * slow;
+        if (!movement.termine)
+        {
+            body.velocity = v * slow;
+        }
+
+        else body.velocity = v * 0;
         
     }
 }
