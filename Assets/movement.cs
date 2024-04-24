@@ -91,6 +91,7 @@ public class movement : MonoBehaviour
             if (Streak >= 7 && !inversed) { LetterActionList.Reverse(); inversed = true; Warning.text = ""; }
 
             if (Streak > 3 && !inversed) { Warning.text = "Warning ! " + (7 - Streak); }
+            if (Streak <= 3 && !inversed) { Warning.text = ""; }
 
             GetComponent<CapsuleCollider2D>().enabled = true;
             timer = 0;
