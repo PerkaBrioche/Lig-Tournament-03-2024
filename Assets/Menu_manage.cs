@@ -15,4 +15,9 @@ public class Menu_Manage : MonoBehaviour
     {
         Application.Quit();
     }
+    public void Menu() { SceneManager.LoadScene("Menu"); }
+    public void Tuto_but() { SceneManager.LoadScene("Tutone"); }
+    public void Tuto_but2() { SceneManager.LoadScene("Tutwo"); }
+    
+    public void Tuto_but3() { SceneManager.LoadScene("Tuthree"); }
 }

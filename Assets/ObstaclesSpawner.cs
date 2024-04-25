@@ -21,7 +21,7 @@ public class ObstaclesSpawner : MonoBehaviour
         lastPos = transform.position;
         offset = transform.position - player.position;
 
-        spawnDist = Random.Range(10f, 20f);
+        spawnDist = Random.Range(5f, 15f);
         StartCoroutine(ObstacleSpawn());
     }
 
@@ -57,11 +57,9 @@ public class ObstaclesSpawner : MonoBehaviour
             {
                 var pos_obs = new Vector3(transform.position.x, y_obs);
                 GameObject obstacle = Instantiate(obs_spawn, pos_obs, Quaternion.identity);
-                Debug.Log("Object spawned!!!!");
             }
             else
             {
-                Debug.LogError("Prefab is null!!!!");
             }
             while (dist < spawnDist)
             {

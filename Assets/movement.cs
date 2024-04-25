@@ -5,6 +5,7 @@ using Febucci;
 using Febucci.UI.Effects;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class movement : MonoBehaviour
 {
@@ -46,6 +47,7 @@ public class movement : MonoBehaviour
     public TextMeshProUGUI StreakAction;
     public int Streak;
     public List<KeyCode> LetterActionList;
+    public List<string> CharActionList;
     public List<KeyCode> esquiv_haut;
     public List<KeyCode> esquiv_bas;
     public bool Is_Player1Playing;
@@ -83,14 +85,15 @@ public class movement : MonoBehaviour
 
         if (!termine)
         {
+            if (Input.GetKeyDown(KeyCode.Escape)) termine = true;
             chrono_f += Time.deltaTime;
             chrono = (int)chrono_f;
             Chrono.text = chrono.ToString();
 
-            if (Streak < 7 && inversed) { LetterActionList.Reverse(); inversed = false; Warning.text = ""; }
-            if (Streak >= 7 && !inversed) { LetterActionList.Reverse(); inversed = true; Warning.text = ""; }
+            if (Streak < 7 && inversed) { LetterActionList.Reverse(); CharActionList.Reverse(); inversed = false; Warning.text = ""; }
+            if (Streak >= 7 && !inversed) { LetterActionList.Reverse(); CharActionList.Reverse(); inversed = true; Warning.text = ""; }
 
-            if (Streak > 3 && !inversed) { Warning.text = "Warning ! " + (7 - Streak); }
+            if (Streak > 3 && !inversed) { Warning.text = "Inversion touches : " + (7 - Streak); }
             if (Streak <= 3 && !inversed) { Warning.text = ""; }
 
             GetComponent<CapsuleCollider2D>().enabled = true;
@@ -99,13 +102,10 @@ public class movement : MonoBehaviour
             if (esq_basse) // en gros, l'idée est de lever la hitbox du perso et de slow_mo le temps que l'objet passe
             {
                 player_body.constraints = RigidbodyConstraints2D.FreezePositionY;
-                Debug.Log("fonction esquive appelée");
                 stun = true;
                 GetComponent<CapsuleCollider2D>().offset = shrink;
                 zone_slow.GetComponent<BoxCollider2D>().offset = shrink;
                 timer_esq_bas += Time.deltaTime;
-                Debug.Log(timer_esq_bas);
-                Debug.Log("taille normale");
                 if (timer_esq_bas >= 1)
                 {
                     timer_esq_bas = 0;
@@ -119,10 +119,11 @@ public class movement : MonoBehaviour
                 RightLeg.enabled = false;
                 LeftLeg.enabled = false;
                 Top.enabled = false;
+                GetComponent<CapsuleCollider2D>().offset = shrink;
                 player_sprite.sprite = high_sprite[0];
                 player_body.velocity = new Vector2(0, 2.5f);  //E : je donne une vélocité qui va vers le haut le temps que le perso passe au dessus de la grenade
                 timer_esq_haute += Time.deltaTime;
-                if (timer_esq_haute > 0.66f) player_sprite.sprite = high_sprite[2];
+                if (timer_esq_haute > 0.66f) { player_sprite.sprite = high_sprite[2]; GetComponent<CapsuleCollider2D>().offset = normal_height; }
                 else if (timer_esq_haute > 0.33) player_sprite.sprite = high_sprite[1];
 
                 if (timer_esq_haute > 1)
@@ -192,7 +193,7 @@ public class movement : MonoBehaviour
                     vitesseDeplacement = InitvitesseDeplacement + (Streak / 2);
                     if (Is_Player1Playing || Is_Player2Playing)
                     {
-                        LetterAction.text = LetterActionList[ActionState % 6].ToString();
+                        LetterAction.text = CharActionList[ActionState % 6];
                         StreakAction.text = "x" + Streak;
                     }
                     else
@@ -227,8 +228,7 @@ public class movement : MonoBehaviour
                                 if (seuil_pos.pos_x - newPosition.x > 2.1f)
                                     transform.position = newPosition;
                                 else
-                                    Debug.Log("feur");
-                                transform.position = zone_slow.transform.position - new Vector3(1, 0, 0);
+                                    transform.position = zone_slow.transform.position - new Vector3(1, 0, 0);
                                 Streak++;
                             }
                         }
@@ -271,8 +271,8 @@ public class movement : MonoBehaviour
                     if (obst.tag_o == "high")
                     {
                         ObstacleAvoiding = true;
-                        LetterAvoidL.text = esquiv_haut[0].ToString();
-                        LetterAvoidR.text = esquiv_haut[1].ToString();
+                        LetterAvoidL.text = "Down";
+                        LetterAvoidR.text = "S";
                         if (!arrow_first && Input.GetKeyDown(esquiv_haut[1])) // en gros, je vois quelle touche a été pressée en premier, et j'attend que l'autre soit pressée
                         {
                             s_first = true;
@@ -320,8 +320,8 @@ public class movement : MonoBehaviour
 
                     if (obst.tag_o == "low")
                     {
-                        LetterAvoidL.text = esquiv_bas[0].ToString();
-                        LetterAvoidR.text = esquiv_bas[1].ToString();
+                        LetterAvoidL.text = "Up";
+                        LetterAvoidR.text = "Z";
                         if (Input.GetKeyDown(esquiv_bas[0]))
                         {
                             INT_AvoidR++; // E: le principe c qu'il faut appuyer un nombre de fois sur flèche du haut / Z pour que le perso saute, avoidR et avoidL comptent le nombre de fois que ces touches sont appuyées
@@ -340,7 +340,18 @@ public class movement : MonoBehaviour
 
             }
         }
-        else bravo.text = "BRAVO !!";
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneManager.LoadScene("Menu");
+            
+            }
+            if (transform.position.x >= arrive)
+                bravo.text = "BRAVO !!" + "\n" + "Veuillez donner votre temps au staff puis appuyez sur Echap pour revenir au menu";
+            else { bravo.text = "Pause, appuyez sur échap pour revenir au menu et espace pour reprendre"; if (Input.GetKeyDown(KeyCode.Space)) { termine = false; bravo.text = ""; } }
+
+        }
     }
 }
 

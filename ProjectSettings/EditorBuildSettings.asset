@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Tutone.unity
+    guid: 974aefa020c3197418149b3a8db2a420
+  - enabled: 1
+    path: Assets/Scenes/Tutwo.unity
+    guid: c9e8bc8922725d043ae77a7e638898ea
+  - enabled: 1
+    path: Assets/Scenes/Tuthree.unity
+    guid: 75989dad5083629468b3dcd589be2cb1
   m_configObjects: {}

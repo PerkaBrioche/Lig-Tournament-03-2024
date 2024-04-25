@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 8}
+  m_AnchoredPosition: {x: 12.36, y: 8}
   m_SizeDelta: {x: 3.0343, y: 3.2435}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &34270626
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -3.287564, y: 0, z: -1.6556059, w: -0.009123564}
+  m_margin: {x: -5.309196, y: 0, z: -4.17312, w: -0.009123564}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -2798,6 +2798,13 @@ MonoBehaviour:
   StreakAction: {fileID: 1941195046}
   Streak: 0
   LetterActionList: 770000006400000061000000110100001301000014010000
+  CharActionList:
+  - Z
+  - D
+  - Q
+  - Up
+  - Right
+  - Left
   esquiv_haut: 1201000073000000
   esquiv_bas: 1101000077000000
   Is_Player1Playing: 1
@@ -3256,7 +3263,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 852, y: -408}
+  m_AnchoredPosition: {x: -767, y: -253}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1941195046

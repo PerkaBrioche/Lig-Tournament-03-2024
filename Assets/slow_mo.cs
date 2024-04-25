@@ -22,7 +22,7 @@ public class slow_mo : MonoBehaviour
 
       
       
-        v = new Vector3(-6, 0, 0);
+        v = new Vector3(-9, 0, 0);
         body.velocity = v;
         
 
