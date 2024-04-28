@@ -6,6 +6,8 @@ using Febucci.UI.Effects;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
+using Unity.Burst.CompilerServices;
 
 public class movement : MonoBehaviour
 {
@@ -24,13 +26,14 @@ public class movement : MonoBehaviour
     public SpriteRenderer RightLeg;
     public SpriteRenderer LeftLeg;
     public SpriteRenderer Top;
+    public AudioSource audio_level;
+    public AudioClip victory;
+    public AudioClip victory2;
     
     public SlideBehavior SlideBehavior;
 
     public int minValue;
     public int maxValue;
-    public Color minColor;
-    public Color maxColor;
     public Rigidbody2D player_body;
     
     
@@ -68,7 +71,8 @@ public class movement : MonoBehaviour
     public float arrive;
     public bool termine = false;
     
-    
+
+
     private void Start()
     {
         Top.sprite = SpritesTop[4];
@@ -77,15 +81,19 @@ public class movement : MonoBehaviour
         Warning.text = "";
         Chrono.text = "0";
         bravo.text = "";
+        audio_level.loop = true;
+        audio_level.Play();
+        
     }
-
+   
 
     void Update()
     {   if (transform.position.x >= arrive) termine = true;
 
         if (!termine)
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) termine = true;
+            
+                    if (Input.GetKeyDown(KeyCode.Escape)) termine = true;
             chrono_f += Time.deltaTime;
             chrono = (int)chrono_f;
             Chrono.text = chrono.ToString();
@@ -208,6 +216,7 @@ public class movement : MonoBehaviour
                         {
                             //Debug.Log("Bonne lettre : " + touche);
                             ActionState++;
+                           
                             if (ActionState == 3)
                             {
                                 Is_Player1Playing = false;
@@ -234,6 +243,7 @@ public class movement : MonoBehaviour
                         }
                         else if (Input.anyKeyDown && !Input.GetKeyDown(touche))
                         {
+                            StreakAction.color = Color.red;
                             Streak = 0;
                             if (Is_Player1Playing)
                             {
@@ -257,7 +267,7 @@ public class movement : MonoBehaviour
                         if (Streak > 0)
                         {
                             float t = Mathf.InverseLerp(minValue, maxValue, Streak);
-                            Color lerpedColor = Color.Lerp(minColor, maxColor, t);
+                            Color lerpedColor = Color.Lerp(Color.white, Color.yellow, t);
                             StreakAction.color = lerpedColor;
                         }
 
@@ -267,7 +277,7 @@ public class movement : MonoBehaviour
                 {
 
                     LetterAction.text = "";
-                    print("Yipi");
+                   
                     if (obst.tag_o == "high")
                     {
                         ObstacleAvoiding = true;
@@ -276,13 +286,13 @@ public class movement : MonoBehaviour
                         if (!arrow_first && Input.GetKeyDown(esquiv_haut[1])) // en gros, je vois quelle touche a été pressée en premier, et j'attend que l'autre soit pressée
                         {
                             s_first = true;
-                            Debug.Log("touche pressée");
+                            
                         }
 
                         if (!s_first && Input.GetKeyDown(esquiv_haut[0]))
                         {
                             arrow_first = true;
-                            Debug.Log("touche pressée");
+                            
                         }
 
                         if (arrow_first)
@@ -345,10 +355,10 @@ public class movement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 SceneManager.LoadScene("Menu");
-            
+
             }
             if (transform.position.x >= arrive)
-                bravo.text = "BRAVO !!" + "\n" + "Veuillez donner votre temps au staff puis appuyez sur Echap pour revenir au menu";
+            { bravo.text = "BRAVO !!" + "\n" + "Veuillez donner votre temps au staff puis appuyez sur Echap pour revenir au menu"; Chrono.text = "Temps final : " + chrono + " secondes "; Chrono.color = Color.red; LetterAction.text = ""; if (audio_level.clip != victory) { audio_level.clip = victory; audio_level.loop = false; audio_level.Play(); } }
             else { bravo.text = "Pause, appuyez sur échap pour revenir au menu et espace pour reprendre"; if (Input.GetKeyDown(KeyCode.Space)) { termine = false; bravo.text = ""; } }
 
         }

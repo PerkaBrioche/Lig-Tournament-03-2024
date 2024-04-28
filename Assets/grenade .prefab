@@ -197,8 +197,8 @@ GameObject:
   - component: {fileID: 7204677333936807454}
   - component: {fileID: -7372260535103223674}
   - component: {fileID: 3386263403961598832}
+  - component: {fileID: 5204512069214499845}
   - component: {fileID: -7320032512641701543}
-  - component: {fileID: -2579357662272626291}
   - component: {fileID: -2755965883710252126}
   m_Layer: 0
   m_Name: 'grenade '
@@ -348,21 +348,7 @@ CircleCollider2D:
   m_Offset: {x: -0.02, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &-7320032512641701543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8495723706292680490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a057c41cb734bd744add606028b6387e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 7204677333936807454}
-  inputText: {fileID: 2881135490047543697}
---- !u!114 &-2579357662272626291
+--- !u!114 &5204512069214499845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -380,6 +366,20 @@ MonoBehaviour:
   - {fileID: -1039876707, guid: 7bacc6160d0b596479a928c7a1928659, type: 3}
   - {fileID: 208394260, guid: 7bacc6160d0b596479a928c7a1928659, type: 3}
   Obst: {fileID: 901451546814424634}
+--- !u!114 &-7320032512641701543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8495723706292680490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a057c41cb734bd744add606028b6387e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 7204677333936807454}
+  inputText: {fileID: 2881135490047543697}
 --- !u!114 &-2755965883710252126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,3 +393,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacle: {fileID: 8495723706292680490}
+  audio_level: {fileID: 9197756692309446575, guid: 1f093245941211847bfdc529fa36c1de, type: 3}
+  hit: {fileID: 8300000, guid: 43a1b73f36f332543960fd5693c63990, type: 3}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class anim : MonoBehaviour
+public class anim1 : MonoBehaviour
 {
     public List<Sprite> SpritesObst;
     public SpriteRenderer Obst;

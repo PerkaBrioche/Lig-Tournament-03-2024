@@ -392,3 +392,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacle: {fileID: 8337905341681646781}
+  audio_level: {fileID: 0}
+  hit: {fileID: 8300000, guid: 43a1b73f36f332543960fd5693c63990, type: 3}

@@ -6,6 +6,9 @@ using UnityEngine;
 public class Collision : MonoBehaviour
 {
     public GameObject obstacle;
+    public AudioSource audio_level;
+    public AudioClip hit;
+ 
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,7 @@ public class Collision : MonoBehaviour
     void Update()
     {
         if (obstacle.transform.position.x < -15) Destroy(obstacle);// je détruis l'obstacle si jamais il va trop a gauche
+
     }
 
 
@@ -25,6 +29,7 @@ public class Collision : MonoBehaviour
         if (infoCollision.CompareTag("Player"))
         {
             Debug.Log("Hit");
+            audio_level.PlayOneShot(hit);
             Vector3 push = new Vector3(-2f, 0f, 0f);
             movement.stun = true;
             Destroy(obstacle); // je détruis l'objet si jamais il entre en collision avec le joueur
