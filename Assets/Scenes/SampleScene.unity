@@ -2819,7 +2819,7 @@ MonoBehaviour:
   esq_haute: 0
   arrow_first: 0
   s_first: 0
-  arrive: 2
+  arrive: 50
   termine: 0
 --- !u!95 &1384468691
 Animator:
