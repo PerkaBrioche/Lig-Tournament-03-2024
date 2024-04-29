@@ -28,7 +28,8 @@ public class movement : MonoBehaviour
     public SpriteRenderer Top;
     public AudioSource audio_level;
     public AudioClip victory;
-    public AudioClip victory2;
+    public AudioSource effect;
+    public AudioClip hit;
     
     public SlideBehavior SlideBehavior;
 
@@ -70,6 +71,7 @@ public class movement : MonoBehaviour
     private bool inversed = false;
     public float arrive;
     public bool termine = false;
+    public bool sound = true;
     
 
 
@@ -85,8 +87,8 @@ public class movement : MonoBehaviour
         audio_level.Play();
         
     }
-   
 
+    
     void Update()
     {   if (transform.position.x >= arrive) termine = true;
 
@@ -114,6 +116,7 @@ public class movement : MonoBehaviour
                 GetComponent<CapsuleCollider2D>().offset = shrink;
                 zone_slow.GetComponent<BoxCollider2D>().offset = shrink;
                 timer_esq_bas += Time.deltaTime;
+                sound = false;
                 if (timer_esq_bas >= 1)
                 {
                     timer_esq_bas = 0;
@@ -146,6 +149,7 @@ public class movement : MonoBehaviour
 
             if (stun) // E : en gros l'idée c'est que pendant une seconde, tu peux plus bouger si t'as été touchée (en plus de la poussée qui était la de base), plus de 1 secondes, je trouve ca fait un peu bcp en vrai
             {
+                
                 player_sprite.enabled = true;
                 RightLeg.enabled = false;
                 LeftLeg.enabled = false;
@@ -157,6 +161,7 @@ public class movement : MonoBehaviour
                 Debug.Log("stun !");
                 player_body.constraints = RigidbodyConstraints2D.FreezePositionX;
                 timer_stun += Time.deltaTime;
+                if (sound) { effect.Play(); sound = false; }
                 if (timer_stun > 1)
                 {
                     stun = false;
@@ -168,12 +173,14 @@ public class movement : MonoBehaviour
                     LeftLeg.enabled = true;
                     player_sprite.enabled = false;
                 }
+                
+
 
             }
 
             else
             {
-
+                sound = true;
                 if (!ObstacleAvoiding && player.transform.position.y < -1)
                 {
                     player_sprite.enabled = false;
@@ -358,7 +365,7 @@ public class movement : MonoBehaviour
 
             }
             if (transform.position.x >= arrive)
-            { bravo.text = "BRAVO !!" + "\n" + "Veuillez donner votre temps au staff puis appuyez sur Echap pour revenir au menu"; Chrono.text = "Temps final : " + chrono + " secondes "; Chrono.color = Color.red; LetterAction.text = ""; if (audio_level.clip != victory) { audio_level.clip = victory; audio_level.loop = false; audio_level.Play(); } }
+            { bravo.text = "BRAVO !!" + "\n" + "Veuillez donner votre temps au staff puis appuyez sur Echap pour revenir au menu"; Chrono.text = "Temps final : " + chrono + " secondes "; Chrono.color = Color.red; LetterAction.text = ""; if (audio_level.clip != victory) { audio_level.clip = victory; audio_level.loop = false; audio_level.Play(); } ScoreScreenshot.CreateScreenshot(); }
             else { bravo.text = "Pause, appuyez sur échap pour revenir au menu et espace pour reprendre"; if (Input.GetKeyDown(KeyCode.Space)) { termine = false; bravo.text = ""; } }
 
         }
