@@ -10,6 +10,7 @@ public class anim1 : MonoBehaviour
     void Start()
     {
         Obst.sprite = SpritesObst[0];
+        
     }
 
     float timer = 0f;

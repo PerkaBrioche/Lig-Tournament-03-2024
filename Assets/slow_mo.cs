@@ -13,6 +13,9 @@ public class slow_mo : MonoBehaviour
     public TextMeshPro inputText;
     public static float slow;
     private Vector3 v;
+   
+
+
 
 
     void Start()
@@ -20,8 +23,12 @@ public class slow_mo : MonoBehaviour
         slow = 1;
         movement = GameObject.Find("Player").GetComponent<movement>();
 
-      
-      
+  
+
+       
+
+        
+
         v = new Vector3(-9, 0, 0);
         body.velocity = v;
         
@@ -34,6 +41,8 @@ public class slow_mo : MonoBehaviour
         {
             movement.ObstacleAvoiding = true;
             slow = 0.1f;
+          
+            
         }
     }
 
@@ -43,7 +52,9 @@ public class slow_mo : MonoBehaviour
         {
             movement.ObstacleAvoiding = false;
             slow = 1;
-        }
+         
+            
+            }
     }
 
     

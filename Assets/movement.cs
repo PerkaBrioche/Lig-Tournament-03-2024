@@ -30,6 +30,14 @@ public class movement : MonoBehaviour
     public AudioClip victory;
     public AudioSource effect;
     public AudioClip hit;
+    public AudioClip ding_ding;
+    public AudioClip sound_1;
+    public AudioClip sound_2;
+    public AudioClip sound_3;
+    public AudioClip sound_fail;
+    public TextMeshPro avancement;
+    public bool avancement_moment = true;
+    public int avancement_pos = 1;
     
     public SlideBehavior SlideBehavior;
 
@@ -46,7 +54,7 @@ public class movement : MonoBehaviour
     public TextMeshPro Warning;
     public TextMeshPro Chrono;
     public TextMeshPro bravo;
-    public int chrono;
+    public float chrono;
     public float chrono_f;
     public TextMeshProUGUI StreakAction;
     public int Streak;
@@ -72,6 +80,7 @@ public class movement : MonoBehaviour
     public float arrive;
     public bool termine = false;
     public bool sound = true;
+    public float timer_fade = 1;
     
 
 
@@ -85,7 +94,10 @@ public class movement : MonoBehaviour
         bravo.text = "";
         audio_level.loop = true;
         audio_level.Play();
-        
+        avancement.text = " 0m / 150m ";
+        audio_level.pitch = 1;
+        effect.volume = 0.10f;
+        audio_level.volume = 0.050f;
     }
 
     
@@ -97,7 +109,7 @@ public class movement : MonoBehaviour
             
                     if (Input.GetKeyDown(KeyCode.Escape)) termine = true;
             chrono_f += Time.deltaTime;
-            chrono = (int)chrono_f;
+            chrono = Mathf.Round(chrono_f*100)/100;
             Chrono.text = chrono.ToString();
 
             if (Streak < 7 && inversed) { LetterActionList.Reverse(); CharActionList.Reverse(); inversed = false; Warning.text = ""; }
@@ -111,6 +123,7 @@ public class movement : MonoBehaviour
 
             if (esq_basse) // en gros, l'idée est de lever la hitbox du perso et de slow_mo le temps que l'objet passe
             {
+                if (sound){ effect.volume = 1; effect.clip = ding_ding; effect.Play();  sound = false; effect.volume = 0.10f; }
                 player_body.constraints = RigidbodyConstraints2D.FreezePositionY;
                 stun = true;
                 GetComponent<CapsuleCollider2D>().offset = shrink;
@@ -126,6 +139,7 @@ public class movement : MonoBehaviour
             }
             if (esq_haute)
             {
+                if (sound) { effect.clip = ding_ding; effect.Play(); sound = false; }
                 player_sprite.enabled = true;
                 RightLeg.enabled = false;
                 LeftLeg.enabled = false;
@@ -161,7 +175,7 @@ public class movement : MonoBehaviour
                 Debug.Log("stun !");
                 player_body.constraints = RigidbodyConstraints2D.FreezePositionX;
                 timer_stun += Time.deltaTime;
-                if (sound) { effect.Play(); sound = false; }
+                if (sound) { effect.clip = hit; effect.Play(); sound = false; }
                 if (timer_stun > 1)
                 {
                     stun = false;
@@ -180,9 +194,29 @@ public class movement : MonoBehaviour
 
             else
             {
+                
                 sound = true;
                 if (!ObstacleAvoiding && player.transform.position.y < -1)
                 {
+
+                    if (((transform.position.x < 60 && transform.position.x > 40)|| (transform.position.x > 90 && transform.position.x <110)) && transform.position.x < 150) avancement_moment = true;
+
+                    if (avancement_moment) 
+                    {
+                        avancement.text = (avancement_pos * 50).ToString() + "m / 150m";
+                        timer_fade += Time.deltaTime;
+                        Color lerpcol = Color.white;
+                        
+                        if (timer_fade > 3)
+                        lerpcol.a = 1 / ((timer_fade - 3)* (timer_fade - 3) * (timer_fade - 3)) ;
+                       
+                        if (timer_fade > 11) { lerpcol.a = 0; avancement_moment = false; timer_fade = 1; avancement_pos ++; }
+                        avancement.color = lerpcol;
+                        
+                    }
+
+                   
+
                     player_sprite.enabled = false;
                     RightLeg.enabled = true;
                     LeftLeg.enabled = true;
@@ -223,7 +257,9 @@ public class movement : MonoBehaviour
                         {
                             //Debug.Log("Bonne lettre : " + touche);
                             ActionState++;
-                           
+                            if (ActionState % 3 == 1) { effect.clip = sound_1; effect.Play(); }
+                            if (ActionState % 3 == 2) { effect.clip = sound_2; effect.Play(); }
+                            if (ActionState % 3 == 0 && Streak != 0) { effect.clip = sound_3; effect.Play(); }
                             if (ActionState == 3)
                             {
                                 Is_Player1Playing = false;
@@ -250,6 +286,7 @@ public class movement : MonoBehaviour
                         }
                         else if (Input.anyKeyDown && !Input.GetKeyDown(touche))
                         {
+                            effect.volume = 0.5f; effect.clip = sound_fail; effect.Play(); effect.volume = 0.10f;
                             StreakAction.color = Color.red;
                             Streak = 0;
                             if (Is_Player1Playing)
@@ -277,7 +314,7 @@ public class movement : MonoBehaviour
                             Color lerpedColor = Color.Lerp(Color.white, Color.yellow, t);
                             StreakAction.color = lerpedColor;
                         }
-
+                      
                     }
                 }
                 else
@@ -365,7 +402,7 @@ public class movement : MonoBehaviour
 
             }
             if (transform.position.x >= arrive)
-            { bravo.text = "BRAVO !!" + "\n" + "Veuillez donner votre temps au staff puis appuyez sur Echap pour revenir au menu"; Chrono.text = "Temps final : " + chrono + " secondes "; Chrono.color = Color.red; LetterAction.text = ""; if (audio_level.clip != victory) { audio_level.clip = victory; audio_level.loop = false; audio_level.Play(); } ScoreScreenshot.CreateScreenshot(); }
+            { audio_level.pitch = 1; bravo.text = "BRAVO !!" + "\n" + "Veuillez donner votre temps au staff puis appuyez sur Echap pour revenir au menu"; Chrono.text = "Temps final : " + chrono + " secondes "; Chrono.color = Color.red; LetterAction.text = ""; if (audio_level.clip != victory) { audio_level.clip = victory; audio_level.loop = false; audio_level.Play(); } ScoreScreenshot.CreateScreenshot(); }
             else { bravo.text = "Pause, appuyez sur échap pour revenir au menu et espace pour reprendre"; if (Input.GetKeyDown(KeyCode.Space)) { termine = false; bravo.text = ""; } }
 
         }
