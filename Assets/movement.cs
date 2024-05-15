@@ -98,6 +98,8 @@ public class movement : MonoBehaviour
         audio_level.pitch = 1;
         effect.volume = 0.10f;
         audio_level.volume = 0.050f;
+        LetterAvoidL.color =  new Color(0f, 1f, 0f);
+        LetterAvoidR.color = new Color(0, 127f, 255f);
     }
 
     
@@ -230,11 +232,15 @@ public class movement : MonoBehaviour
                     Top.sprite = SpritesTop[ActionState % 6];
                     if (Is_Player1Playing)
                     {
+                        if (!inversed) LetterAction.color = new Color(0, 127f, 255f);
+                        else LetterAction.color = new Color(0f, 1f, 0f);
                         RightLeg.sprite = SpritesLegs[ActionState % 6];
                         LeftLeg.sprite = SpritesLegs[(ActionState + 3) % 6];
                     }
-                    else if (Is_Player2Playing)
+                    else if (Is_Player2Playing )
                     {
+                        if (!inversed) LetterAction.color = new Color (0f, 1f, 0f);
+                        else LetterAction.color = new Color(0, 127f, 255f);
                         RightLeg.sprite = SpritesLegs[ActionState % 6];
                         LeftLeg.sprite = SpritesLegs[(ActionState + 3) % 6];
 
@@ -255,7 +261,7 @@ public class movement : MonoBehaviour
                         KeyCode touche = LetterActionList[ActionState % 6];
                         if (Input.GetKeyDown(touche))
                         {
-                            //Debug.Log("Bonne lettre : " + touche);
+                            
                             ActionState++;
                             if (ActionState % 3 == 1) { effect.clip = sound_1; effect.Play(); }
                             if (ActionState % 3 == 2) { effect.clip = sound_2; effect.Play(); }
@@ -402,7 +408,7 @@ public class movement : MonoBehaviour
 
             }
             if (transform.position.x >= arrive)
-            { audio_level.pitch = 1; bravo.text = "BRAVO !!" + "\n" + "Veuillez donner votre temps au staff puis appuyez sur Echap pour revenir au menu"; Chrono.text = "Temps final : " + chrono + " secondes "; Chrono.color = Color.red; LetterAction.text = ""; if (audio_level.clip != victory) { audio_level.clip = victory; audio_level.loop = false; audio_level.Play(); } ScoreScreenshot.CreateScreenshot(); }
+            { audio_level.pitch = 1; bravo.text = "BRAVO !!" + "\n" + "Veuillez donner votre temps au staff puis appuyez sur Echap pour revenir au menu"; Chrono.fontSize = 5  ; Chrono.text = "Temps final : " + chrono + " secondes "; Chrono.color = Color.red; LetterAction.text = ""; if (audio_level.clip != victory) { audio_level.clip = victory; audio_level.loop = false; audio_level.Play(); } ScoreScreenshot.CreateScreenshot(); }
             else { bravo.text = "Pause, appuyez sur échap pour revenir au menu et espace pour reprendre"; if (Input.GetKeyDown(KeyCode.Space)) { termine = false; bravo.text = ""; } }
 
         }
