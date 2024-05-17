@@ -6,6 +6,7 @@ using UnityEngine;
 public class seuil_pos : MonoBehaviour
 {
     public static float pos_x = 10000000;
+
     // Start is called before the first frame update
     void Start()
     {

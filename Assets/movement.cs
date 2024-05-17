@@ -100,6 +100,7 @@ public class movement : MonoBehaviour
         audio_level.volume = 0.050f;
         LetterAvoidL.color =  new Color(0f, 1f, 0f);
         LetterAvoidR.color = new Color(0, 127f, 255f);
+       // Warning.color = Color.black;
     }
 
     
@@ -150,7 +151,7 @@ public class movement : MonoBehaviour
                 player_sprite.sprite = high_sprite[0];
                 player_body.velocity = new Vector2(0, 2.5f);  //E : je donne une vélocité qui va vers le haut le temps que le perso passe au dessus de la grenade
                 timer_esq_haute += Time.deltaTime;
-                if (timer_esq_haute > 0.66f) { player_sprite.sprite = high_sprite[2]; GetComponent<CapsuleCollider2D>().offset = normal_height; }
+                if (timer_esq_haute > 0.66f) { player_sprite.sprite = high_sprite[2];}
                 else if (timer_esq_haute > 0.33) player_sprite.sprite = high_sprite[1];
 
                 if (timer_esq_haute > 1)
@@ -160,6 +161,7 @@ public class movement : MonoBehaviour
                     ObstacleAvoiding = false;
                     esq_haute = false;
                     timer_esq_haute = 0;
+                    GetComponent<CapsuleCollider2D>().offset = normal_height;
                 }
             }
 
@@ -201,7 +203,7 @@ public class movement : MonoBehaviour
                 if (!ObstacleAvoiding && player.transform.position.y < -1)
                 {
 
-                    if (((transform.position.x < 60 && transform.position.x > 40)|| (transform.position.x > 90 && transform.position.x <110)) && transform.position.x < 150) avancement_moment = true;
+                    if (((transform.position.x < 60 && transform.position.x > 40 && avancement_pos == 1)|| (transform.position.x > 90 && transform.position.x <110 && avancement_pos == 2)) && transform.position.x < 150) avancement_moment = true;
 
                     if (avancement_moment) 
                     {
